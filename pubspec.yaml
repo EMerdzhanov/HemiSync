@@ -2,10 +2,10 @@ name: hemissync
 description: "HemiSync - Binaural beats generator with independent left/right ear frequency control"
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.2+2
 
 environment:
-  sdk: ^3.10.4
+  sdk: ^3.5.0
 
 dependencies:
   flutter:
