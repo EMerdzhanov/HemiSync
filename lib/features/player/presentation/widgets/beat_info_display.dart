@@ -41,10 +41,10 @@ class BeatInfoDisplay extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: color.withValues(alpha: 0.3),
+          color: color.withOpacity(0.3),
           width: 1,
         ),
       ),
@@ -76,7 +76,7 @@ class BeatInfoDisplay extends StatelessWidget {
               Text(
                 'Hz',
                 style: TextStyle(
-                  color: color.withValues(alpha: 0.7),
+                  color: color.withOpacity(0.7),
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),
@@ -87,7 +87,7 @@ class BeatInfoDisplay extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.2),
+              color: color.withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(

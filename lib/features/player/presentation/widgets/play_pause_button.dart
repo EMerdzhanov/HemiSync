@@ -34,7 +34,7 @@ class PlayPauseButton extends StatelessWidget {
           boxShadow: isPlaying
               ? [
                   BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.4),
+                    color: AppColors.primary.withOpacity(0.4),
                     blurRadius: 20,
                     spreadRadius: 2,
                   ),

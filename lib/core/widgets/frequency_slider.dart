@@ -142,10 +142,10 @@ class FrequencySlider extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                 decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.1),
+                  color: color.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                    color: color.withValues(alpha: 0.3),
+                    color: color.withOpacity(0.3),
                     width: 1,
                   ),
                 ),
@@ -162,7 +162,7 @@ class FrequencySlider extends StatelessWidget {
                     Text(
                       'tap to edit',
                       style: TextStyle(
-                        color: color.withValues(alpha: 0.5),
+                        color: color.withOpacity(0.5),
                         fontSize: 9,
                       ),
                     ),
@@ -184,9 +184,9 @@ class FrequencySlider extends StatelessWidget {
         SliderTheme(
           data: SliderThemeData(
             activeTrackColor: color,
-            inactiveTrackColor: color.withValues(alpha: 0.2),
+            inactiveTrackColor: color.withOpacity(0.2),
             thumbColor: color,
-            overlayColor: color.withValues(alpha: 0.2),
+            overlayColor: color.withOpacity(0.2),
             trackHeight: 6,
             thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10),
           ),
@@ -224,10 +224,10 @@ class _AdjustButton extends StatelessWidget {
         width: 32,
         height: 32,
         decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.1),
+          color: color.withOpacity(0.1),
           borderRadius: BorderRadius.circular(6),
           border: Border.all(
-            color: color.withValues(alpha: 0.3),
+            color: color.withOpacity(0.3),
             width: 1,
           ),
         ),

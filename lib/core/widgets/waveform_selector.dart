@@ -46,7 +46,7 @@ class WaveformSelector extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? AppColors.primary.withValues(alpha: 0.2)
+                      ? AppColors.primary.withOpacity(0.2)
                       : AppColors.surfaceLight,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
