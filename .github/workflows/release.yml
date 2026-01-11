@@ -29,6 +29,17 @@ jobs:
       - name: Build macOS
         run: flutter build macos --release
 
+      - name: Ad-hoc sign the app
+        run: |
+          # Sign all nested frameworks and dylibs first
+          find "build/macos/Build/Products/Release/hemissync.app" -name "*.dylib" -o -name "*.framework" | while read item; do
+            codesign --force --deep --sign - "$item" 2>/dev/null || true
+          done
+          # Sign the main app bundle
+          codesign --force --deep --sign - "build/macos/Build/Products/Release/hemissync.app"
+          # Verify signature
+          codesign --verify --deep --strict "build/macos/Build/Products/Release/hemissync.app"
+
       - name: Install create-dmg
         run: brew install create-dmg
 
@@ -213,10 +224,11 @@ jobs:
             | Web | `HemiSync-Web.zip` | Extract and host on any web server |
 
             ### macOS Installation Note
-            Since the app is not signed with an Apple Developer certificate, macOS will block it. After dragging to Applications:
-            1. Open Terminal
-            2. Run: `xattr -cr /Applications/hemissync.app`
-            3. Now you can open the app normally
+            Since the app is not notarized by Apple, macOS will show a warning on first launch:
+            1. Open the app (you'll see "macOS cannot verify the developer")
+            2. Go to **System Settings → Privacy & Security**
+            3. Scroll down and click **"Open Anyway"** next to the HemiSync message
+            4. Click **Open** in the confirmation dialog
 
             ### Features
             - Independent left/right ear frequency control (1 Hz - 25 kHz)
