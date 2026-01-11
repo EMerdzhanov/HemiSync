@@ -224,11 +224,19 @@ jobs:
             | Web | `HemiSync-Web.zip` | Extract and host on any web server |
 
             ### macOS Installation Note
-            Since the app is not notarized by Apple, macOS will show a warning on first launch:
-            1. Open the app (you'll see "macOS cannot verify the developer")
-            2. Go to **System Settings → Privacy & Security**
-            3. Scroll down and click **"Open Anyway"** next to the HemiSync message
-            4. Click **Open** in the confirmation dialog
+            Since the app is not notarized by Apple, macOS will block it. Use one of these methods:
+
+            **Method 1 - Right-click Open (try this first):**
+            1. Drag app to Applications folder
+            2. **Right-click** (or Control+click) on hemissync.app
+            3. Select **"Open"** from the menu
+            4. Click **"Open"** in the dialog that appears
+
+            **Method 2 - Terminal command (if Method 1 doesn't work):**
+            ```
+            xattr -cr /Applications/hemissync.app
+            ```
+            Then open the app normally.
 
             ### Features
             - Independent left/right ear frequency control (1 Hz - 25 kHz)
