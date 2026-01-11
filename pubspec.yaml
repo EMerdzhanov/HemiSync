@@ -2,7 +2,7 @@ name: hemissync
 description: "HemiSync - Binaural beats generator with independent left/right ear frequency control"
 publish_to: 'none'
 
-version: 1.0.4+4
+version: 1.0.5+5
 
 environment:
   sdk: ^3.5.0

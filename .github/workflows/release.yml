@@ -29,17 +29,29 @@ jobs:
       - name: Build macOS
         run: flutter build macos --release
 
-      - name: Package macOS app
+      - name: Install create-dmg
+        run: brew install create-dmg
+
+      - name: Create DMG
         run: |
-          cd build/macos/Build/Products/Release
-          zip -r HemiSync-macOS.zip hemissync.app
-          mv HemiSync-macOS.zip ${{ github.workspace }}/
+          create-dmg \
+            --volname "HemiSync" \
+            --volicon "macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_128.png" \
+            --window-pos 200 120 \
+            --window-size 600 400 \
+            --icon-size 100 \
+            --icon "hemissync.app" 150 185 \
+            --hide-extension "hemissync.app" \
+            --app-drop-link 450 185 \
+            --no-internet-enable \
+            "HemiSync-macOS.dmg" \
+            "build/macos/Build/Products/Release/hemissync.app"
 
       - name: Upload macOS artifact
         uses: actions/upload-artifact@v4
         with:
           name: macos-build
-          path: HemiSync-macOS.zip
+          path: HemiSync-macOS.dmg
 
   build-windows:
     runs-on: windows-latest
@@ -166,7 +178,7 @@ jobs:
 
             | Platform | File | Instructions |
             |----------|------|--------------|
-            | macOS | `HemiSync-macOS.zip` | Extract, right-click app > Open |
+            | macOS | `HemiSync-macOS.dmg` | Open DMG, drag app to Applications, right-click > Open |
             | Windows | `HemiSync-Windows.zip` | Extract and run `hemissync.exe` |
             | Android | `HemiSync-Android.apk` | Enable "Unknown sources", install APK |
             | Web | `HemiSync-Web.zip` | Extract and host on any web server |
@@ -183,7 +195,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            artifacts/macos-build/HemiSync-macOS.zip
+            artifacts/macos-build/HemiSync-macOS.dmg
             artifacts/windows-build/HemiSync-Windows.zip
             artifacts/android-build/HemiSync-Android.apk
             artifacts/web-build/HemiSync-Web.zip
