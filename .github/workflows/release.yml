@@ -70,15 +70,44 @@ jobs:
       - name: Build Windows
         run: flutter build windows --release
 
-      - name: Package Windows app
+      - name: Create Inno Setup script
         run: |
-          Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath HemiSync-Windows.zip
+          @"
+          [Setup]
+          AppName=HemiSync
+          AppVersion=1.0.5
+          AppPublisher=HemiSync
+          DefaultDirName={autopf}\HemiSync
+          DefaultGroupName=HemiSync
+          OutputDir=.
+          OutputBaseFilename=HemiSync-Windows-Setup
+          Compression=lzma
+          SolidCompression=yes
+          ArchitecturesInstallIn64BitMode=x64
+
+          [Files]
+          Source: "build\windows\x64\runner\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+
+          [Icons]
+          Name: "{group}\HemiSync"; Filename: "{app}\hemissync.exe"
+          Name: "{commondesktop}\HemiSync"; Filename: "{app}\hemissync.exe"
+
+          [Run]
+          Filename: "{app}\hemissync.exe"; Description: "Launch HemiSync"; Flags: postinstall nowait
+          "@ | Out-File -FilePath setup.iss -Encoding ASCII
+
+      - name: Install Inno Setup
+        run: choco install innosetup -y
+
+      - name: Build installer
+        run: |
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" setup.iss
 
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4
         with:
           name: windows-build
-          path: HemiSync-Windows.zip
+          path: HemiSync-Windows-Setup.exe
 
   build-android:
     runs-on: ubuntu-latest
@@ -178,10 +207,16 @@ jobs:
 
             | Platform | File | Instructions |
             |----------|------|--------------|
-            | macOS | `HemiSync-macOS.dmg` | Open DMG, drag app to Applications, right-click > Open |
-            | Windows | `HemiSync-Windows.zip` | Extract and run `hemissync.exe` |
+            | macOS | `HemiSync-macOS.dmg` | Open DMG, drag to Applications, see note below |
+            | Windows | `HemiSync-Windows-Setup.exe` | Run installer, follow prompts |
             | Android | `HemiSync-Android.apk` | Enable "Unknown sources", install APK |
             | Web | `HemiSync-Web.zip` | Extract and host on any web server |
+
+            ### macOS Installation Note
+            Since the app is not signed with an Apple Developer certificate, macOS will block it. After dragging to Applications:
+            1. Open Terminal
+            2. Run: `xattr -cr /Applications/hemissync.app`
+            3. Now you can open the app normally
 
             ### Features
             - Independent left/right ear frequency control (1 Hz - 25 kHz)
@@ -196,7 +231,7 @@ jobs:
           prerelease: false
           files: |
             artifacts/macos-build/HemiSync-macOS.dmg
-            artifacts/windows-build/HemiSync-Windows.zip
+            artifacts/windows-build/HemiSync-Windows-Setup.exe
             artifacts/android-build/HemiSync-Android.apk
             artifacts/web-build/HemiSync-Web.zip
         env:
