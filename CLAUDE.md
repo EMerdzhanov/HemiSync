@@ -14,10 +14,11 @@ HemiSync is a cross-platform Flutter application for generating binaural beats w
 
 ## Supported Platforms
 
-- iOS
-- macOS
-- Android
-- Web
+- macOS (DMG installer)
+- Windows (Setup.exe installer)
+- Android (APK)
+- Web (GitHub Pages)
+- iOS (requires Apple Developer account to distribute)
 
 ## Project Structure
 
@@ -244,9 +245,61 @@ Key packages from `pubspec.yaml`:
 - `equatable: ^2.0.7` - Value equality
 - `go_router: ^14.8.1` - Navigation (available for future use)
 
+## Distribution
+
+### GitHub Repository
+- **Repository**: https://github.com/EMerdzhanov/HemiSync
+- **Releases**: https://github.com/EMerdzhanov/HemiSync/releases
+- **Web App**: https://emerdzhanov.github.io/HemiSync/
+
+### Current Version: v1.1.0
+
+### CI/CD Pipeline
+GitHub Actions workflow (`.github/workflows/release.yml`) automatically builds for all platforms when a version tag is pushed:
+- macOS: Creates DMG using `create-dmg`, includes ad-hoc code signing
+- Windows: Creates Setup.exe using Inno Setup
+- Android: Builds release APK
+- Web: Builds and deploys to GitHub Pages
+
+### macOS Installation Note
+Since the app is not notarized with Apple, users must run this command after installation:
+```bash
+xattr -cr /Applications/hemissync.app
+```
+
+### Triggering a Release
+```bash
+# Update version in pubspec.yaml first
+git add -A
+git commit -m "Release vX.Y.Z"
+git push origin main
+git tag vX.Y.Z
+git push origin vX.Y.Z
+```
+
+## Version History
+
+### v1.1.0 (2026-01-12)
+- Increased default macOS window size to 850px height
+- Set minimum window size to prevent controls from being cut off
+- Fixed app title to "HemiSync" (was "hemissync")
+- Updated macOS icons with rounded corners (macOS style)
+- Fixed CardTheme compatibility with Flutter 3.24.0
+- Updated README with correct installation instructions
+- Added Terminal command for macOS Gatekeeper bypass
+
+### v1.0.x (2026-01-11)
+- Initial GitHub release
+- Added Windows platform support
+- Created GitHub Actions CI/CD pipeline
+- Setup macOS DMG and Windows Setup.exe installers
+- Deployed web version to GitHub Pages
+
 ## Notes
 
 - The frequency slider uses logarithmic scaling for better UX across the wide frequency range
 - Frequencies are clamped between 1 Hz and 25,000 Hz
 - The app maintains audio session for background playback on mobile
 - Presets are stored locally using Hive with TypeAdapters
+- Flutter version 3.24.0 is used in CI (specified in workflow)
+- Use `CardTheme` (not `CardThemeData`) for Flutter 3.24.0 compatibility
