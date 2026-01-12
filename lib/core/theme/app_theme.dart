@@ -25,9 +25,12 @@ class AppTheme {
         elevation: 0,
         centerTitle: true,
       ),
-      cardTheme: const CardThemeData(
+      cardTheme: CardTheme(
         color: AppColors.surface,
         elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
