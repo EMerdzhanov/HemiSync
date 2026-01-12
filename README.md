@@ -31,15 +31,20 @@ Binaural beats are an auditory illusion created when two slightly different freq
 ## Download
 
 ### macOS
-1. Download `HemiSync-macOS.zip` from the [Releases](../../releases) page
-2. Extract the zip file
-3. Right-click on `hemissync.app` and select **Open** (required for unsigned apps)
-4. Click **Open** in the security dialog
+1. Download `HemiSync-macOS.dmg` from the [Releases](../../releases) page
+2. Open the DMG and drag the app to your Applications folder
+3. Open Terminal and run:
+   ```
+   xattr -cr /Applications/hemissync.app
+   ```
+4. Now you can open the app normally
+
+> **Note**: The Terminal command is required because the app is not notarized with Apple. This only needs to be done once.
 
 ### Windows
-1. Download `HemiSync-Windows.zip` from the [Releases](../../releases) page
-2. Extract the zip file
-3. Run `hemissync.exe`
+1. Download `HemiSync-Windows-Setup.exe` from the [Releases](../../releases) page
+2. Run the installer and follow the prompts
+3. Launch HemiSync from the Start Menu or Desktop shortcut
 
 ### Android
 1. Download `HemiSync-Android.apk` from the [Releases](../../releases) page
@@ -47,7 +52,7 @@ Binaural beats are an auditory illusion created when two slightly different freq
 3. Open the APK file to install
 
 ### Web
-Visit the [HemiSync Web App](../../pages) to use directly in your browser.
+Visit the [HemiSync Web App](https://emerdzhanov.github.io/HemiSync/) to use directly in your browser.
 
 ## Building from Source
 
