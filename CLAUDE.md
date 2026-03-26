@@ -252,7 +252,17 @@ Key packages from `pubspec.yaml`:
 - **Releases**: https://github.com/EMerdzhanov/HemiSync/releases
 - **Web App**: https://emerdzhanov.github.io/HemiSync/
 
-### Current Version: v1.1.0
+### Current Version: v1.1.1
+
+### Google Play Store
+- **Package**: `com.hemisync.hemissync`
+- **Status**: In review (closed testing submitted 2026-02-20)
+- **Privacy Policy**: https://emerdzhanov.github.io/HemiSync/privacy-policy.html
+- **Store Category**: Health & Fitness
+- **Content Rating**: Everyone (IARC)
+- **Next Steps**: Need 12+ testers opted in for 14 days to unlock production access
+- **Signing**: Upload keystore at `~/upload-keystore.jks`, config in `android/key.properties` (gitignored)
+- **Building AAB locally**: `JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home flutter build appbundle --release`
 
 ### CI/CD Pipeline
 GitHub Actions workflow (`.github/workflows/release.yml`) automatically builds for all platforms when a version tag is pushed:
@@ -260,6 +270,7 @@ GitHub Actions workflow (`.github/workflows/release.yml`) automatically builds f
 - Windows: Creates Setup.exe using Inno Setup
 - Android: Builds release APK
 - Web: Builds and deploys to GitHub Pages
+- Flutter version: 3.38.5 (specified in workflow)
 
 ### macOS Installation Note
 Since the app is not notarized with Apple, users must run this command after installation:
@@ -277,7 +288,19 @@ git tag vX.Y.Z
 git push origin vX.Y.Z
 ```
 
+### Store Assets
+- **Feature graphic**: `store_assets/feature_graphic.png` (1024x500)
+- **Screenshots**: `store_assets/screenshots/` (3 phone screenshots from iOS simulator)
+- **App icon**: `macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_512.png`
+
 ## Version History
+
+### v1.1.1 (2026-02-19)
+- Configured Android release signing (upload keystore)
+- Added privacy policy page (`web/privacy-policy.html`)
+- Updated CI Flutter version from 3.24.0 to 3.38.5
+- Submitted to Google Play Store (closed testing)
+- Created store assets (feature graphic, screenshots)
 
 ### v1.1.0 (2026-01-12)
 - Increased default macOS window size to 850px height
@@ -301,5 +324,8 @@ git push origin vX.Y.Z
 - Frequencies are clamped between 1 Hz and 25,000 Hz
 - The app maintains audio session for background playback on mobile
 - Presets are stored locally using Hive with TypeAdapters
-- Flutter version 3.24.0 is used in CI (specified in workflow)
-- Use `CardTheme` (not `CardThemeData`) for Flutter 3.24.0 compatibility
+- Flutter version 3.38.5 is used in CI (specified in workflow)
+- Use `CardThemeData` for Flutter 3.38.5 (use `CardTheme` if reverting to 3.24.0)
+- Android builds require JDK 21 locally (`JAVA_HOME` must point to temurin-21)
+- Android SDK is at `~/Library/Android/sdk`
+- `android/key.properties` and `*.jks` files are gitignored - never commit signing keys
